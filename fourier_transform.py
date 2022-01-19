@@ -4,7 +4,7 @@ import os
 import matplotlib.pyplot as plt
 
 
-#주석추가
+#주석추가!!
 image = cv2.imread("../../../Desktop/cnn/lenna.png")
 
 
