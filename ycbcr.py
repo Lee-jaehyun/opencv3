@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-from cdf import CDF
+import copy
 
 
 
@@ -17,6 +17,8 @@ y2 = ycbcr[:,:,0]
 cr2 = ycbcr[:,:,1]
 cb2 = ycbcr[:,:,2]
 
+#cr2 = cv2.merge((cr2,cb2))
+print(cr2.shape)
 
 lower = np.array([0, 133, 77])
 upper = np.array([255, 173, 127])
@@ -30,6 +32,7 @@ result = cv2.bitwise_and(image, image, mask=skin2)    # 이미지 비트 연산 
 
 
 print("Y_Shape :",y2.shape)
+print(y2)
 print("YCBCR_Shape: ",ycbcr.shape)
 print("CR_Shape: ",cr2.shape)
 
@@ -50,3 +53,50 @@ cv2.waitKey(0)
 
 print(y2.shape)
 
+def main():
+    image = cv2.imread("../../../Desktop/test_data_set2/IMG_1396.jpg")
+    print(image.shape)
+    image_copy = image.copy()       # 수정할 부분
+    cv2.rectangle(image, (300, 300), (1000,1000), (255,255,255) , -1)
+    cv2.imshow('Original', image)
+    cv2.imshow('Copyed', image_copy)
+    cv2.waitKey(0)
+
+def main1():
+    image = cv2.imread("../../../Desktop/test_data_set2/IMG_1396.jpg")
+    print(image.shape)
+#    dst = cv2.add(image, 70)
+    dst = cv2.subtract(image, 20)
+    cv2.imshow('Original', image)
+    cv2.imshow('add', dst)
+    cv2.waitKey(0)
+
+def main2():
+    image = cv2.imread("../../../Desktop/test_data_set2/IMG_1396.jpg")
+    image2 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    print(image.shape)
+    dst = 1-image
+    cv2.imshow('Original', image)
+    cv2.imshow('add', dst)
+    cv2.waitKey(0)
+    print(image2[200, 200])
+    print(np.mean(image[200,200,:]))
+
+def main3():
+    image = cv2.imread("../../../Desktop/test_data_set2/IMG_1396.jpg")
+    image2 = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    kernel_sharpening = np.array([[1, 1, 1],
+                                  [1,-7,1],
+                                  [1,1,1]])
+    sharpening = cv2.filter2D(image, 0, kernel_sharpening)
+    
+    cv2.imshow('Original', image)
+    cv2.imshow('sharpening', sharpening)
+    cv2.waitKey(0)
+
+def main5():
+    image = cv2.imread("../../../Desktop/test_data_set2/IMG_1396.jpg")
+
+if __name__ == "__main__":
+    main3()
